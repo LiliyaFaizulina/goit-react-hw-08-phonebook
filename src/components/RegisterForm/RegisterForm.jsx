@@ -66,7 +66,9 @@ export const RegisterForm = () => {
           onChange={handleInput}
           required
         />
-        <Button variant="contained">Submit</Button>
+        <Button variant="contained" type="submit">
+          Submit
+        </Button>
       </Form>
     </>
   );

@@ -14,55 +14,55 @@ const token = {
 
 export const registerUser = createAsyncThunk(
   'auth/registerUser',
-  async (user, { rejectedWithValue }) => {
+  async (user, { rejectWithValue }) => {
     try {
       const { data } = await axios.post('/users/signup', user);
       token.set(data.token);
       return data;
     } catch (error) {
-      return rejectedWithValue(error);
+      return rejectWithValue(error.message);
     }
   }
 );
 
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
-  async (user, { rejectedWithValue }) => {
+  async (user, { rejectWithValue }) => {
     try {
       const { data } = await axios.post('/users/login', user);
       token.set(data.token);
       return data;
     } catch (error) {
-      return rejectedWithValue(error);
+      return rejectWithValue(error.message);
     }
   }
 );
 
 export const logoutUser = createAsyncThunk(
   'auth/logoutUser',
-  async (_, { rejectedWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       await axios.post('/users/logout');
       token.unset();
     } catch (error) {
-      return rejectedWithValue(error);
+      return rejectWithValue(error.message);
     }
   }
 );
 
 export const fetchCurrentUser = createAsyncThunk(
   'auth/refreshUser',
-  async (_, { rejectedWithValue, getState }) => {
+  async (_, { rejectWithValue, getState }) => {
     const tokenLS = getState().auth.token;
     if (!tokenLS) {
-      return rejectedWithValue();
+      return rejectWithValue();
     }
     token.set(tokenLS);
     try {
       const { data } = await axios('/users/current');
       return data;
     } catch (error) {
-      return rejectedWithValue(error);
+      return rejectWithValue(error.message);
     }
   }
 );

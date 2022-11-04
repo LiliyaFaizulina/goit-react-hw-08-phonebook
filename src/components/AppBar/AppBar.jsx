@@ -4,6 +4,7 @@ import { AuthMenu } from 'components/AuthMenu/AuthMenu';
 import { UserMenu } from 'components/UserMenu/UserMenu';
 import { selectIsLoggedIn } from 'redux/auth/authSelectors';
 import Container from '@mui/material/Container';
+import { Notification } from 'components/Notification/Notification';
 
 export const AppBar = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -23,6 +24,7 @@ export const AppBar = () => {
         <Navigation />
         {isLoggedIn ? <UserMenu /> : <AuthMenu />}
       </Container>
+      <Notification />
     </header>
   );
 };
