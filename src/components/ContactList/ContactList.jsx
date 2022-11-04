@@ -13,7 +13,6 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 import { Contact } from './ContactList.styled';
 import { IconButton } from '@mui/material';
 
-
 export const ContactList = () => {
   const [contactToUpdate, setContactToUpdate] = useState(null);
   const isLoading = useSelector(selectIsLoading);
@@ -35,52 +34,50 @@ export const ContactList = () => {
   };
 
   return (
-      <ul>
-        {visualContacts.map(({ name, number, id }) => (
-          <Contact key={id}>
-            {/* <img src={icon} alt="Icon" width="24" height="24" /> */}
-            <Avatar
-              sx={{ bgcolor: '#1976d2', width: 30, height: 30, fontSize: 14 }}
-            >
-              {name.split(' ')[0][0] +
-                (name.split(' ')[1] ? name.split(' ')[1][0] : '')}
-            </Avatar>
+    <ul>
+      {visualContacts.map(({ name, number, id }) => (
+        <Contact key={id}>
+          <Avatar
+            sx={{ bgcolor: '#1976d2', width: 30, height: 30, fontSize: 14 }}
+          >
+            {name.split(' ')[0][0] +
+              (name.split(' ')[1] ? name.split(' ')[1][0] : '')}
+          </Avatar>
 
-            <p>
-              {name}: {number}
-            </p>
-            <IconButton
-              size="small"
-              aria-label="update"
-              color="primary"
-              type="button"
-              onClick={() => {
-                showUpdateForm(id);
-              }}
-            >
-              <PublishedWithChangesOutlinedIcon />
-            </IconButton>
-            <IconButton
-              size="small"
-              aria-label="delete"
-              color="primary"
-              disabled={isLoading}
-              type="button"
-              onClick={() => {
-                onDeleteBtnClick(id);
-              }}
-            >
-              <DeleteForeverOutlinedIcon />
-            </IconButton>
-            {contactToUpdate && contactToUpdate.id === id && (
-              <UpdateContactForm
-                contact={contactToUpdate}
-                closeForm={closeUpdateForm}
-              />
-            )}
-          </Contact>
-        ))}
-      </ul>
-
+          <p>
+            {name}: {number}
+          </p>
+          <IconButton
+            size="small"
+            aria-label="update"
+            color="primary"
+            type="button"
+            onClick={() => {
+              showUpdateForm(id);
+            }}
+          >
+            <PublishedWithChangesOutlinedIcon />
+          </IconButton>
+          <IconButton
+            size="small"
+            aria-label="delete"
+            color="primary"
+            disabled={isLoading}
+            type="button"
+            onClick={() => {
+              onDeleteBtnClick(id);
+            }}
+          >
+            <DeleteForeverOutlinedIcon />
+          </IconButton>
+          {contactToUpdate && contactToUpdate.id === id && (
+            <UpdateContactForm
+              contact={contactToUpdate}
+              closeForm={closeUpdateForm}
+            />
+          )}
+        </Contact>
+      ))}
+    </ul>
   );
 };

@@ -14,5 +14,6 @@ export const Heading = styled.h2`
 
 export const Wrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 `;

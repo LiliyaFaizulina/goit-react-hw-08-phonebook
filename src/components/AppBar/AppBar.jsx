@@ -14,6 +14,7 @@ export const AppBar = () => {
         maxWidth="md"
         sx={{
           display: 'flex',
+          flexWrap: 'wrap',
           alignItems: 'center',
           justifyContent: 'space-between',
           borderBottom: '1px solid grey',
