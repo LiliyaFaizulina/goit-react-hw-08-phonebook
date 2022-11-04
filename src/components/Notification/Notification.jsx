@@ -21,7 +21,12 @@ export const Notification = () => {
   };
 
   return (
-    <Snackbar open={open} autoHideDuration={4000} onClose={closeNotify}>
+    <Snackbar
+      open={open}
+      autoHideDuration={4000}
+      onClose={closeNotify}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+    >
       <Alert severity="error" sx={{ width: '100%' }}>
         {authError && 'Invalid password or email!'}
         {error && 'Sorry, server connection error, try again later'}
