@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { loginUser } from 'redux/auth/authOperation';
-import { Form } from 'components/Common.styled';
+import { Form, Heading } from 'components/Common.styled';
 
 export const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -31,30 +31,33 @@ export const LoginForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <TextField
-        label="Email"
-        type="email"
-        name="email"
-        value={email}
-        onChange={handleInput}
-        placeholder="email@example.com"
-        required
-      />
+    <>
+      <Heading>Authorization</Heading>
+      <Form onSubmit={handleSubmit}>
+        <TextField
+          label="Email"
+          type="email"
+          name="email"
+          value={email}
+          onChange={handleInput}
+          placeholder="email@example.com"
+          required
+        />
 
-      <TextField
-        label="Password"
-        type="password"
-        name="password"
-        value={password}
-        onChange={handleInput}
-        placeholder="password"
-        required
-      />
+        <TextField
+          label="Password"
+          type="password"
+          name="password"
+          value={password}
+          onChange={handleInput}
+          placeholder="password"
+          required
+        />
 
-      <Button type="submit" variant="contained">
-        Login
-      </Button>
-    </Form>
+        <Button type="submit" variant="contained">
+          Login
+        </Button>
+      </Form>
+    </>
   );
 };

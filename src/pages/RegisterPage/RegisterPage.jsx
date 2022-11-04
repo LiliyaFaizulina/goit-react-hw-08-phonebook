@@ -3,7 +3,7 @@ import { Section } from 'components/Section/Section';
 
 const RegisterPage = () => {
   return (
-    <Section title="Create new user">
+    <Section>
       <RegisterForm />
     </Section>
   );

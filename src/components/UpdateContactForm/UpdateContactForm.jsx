@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { updateContact } from 'redux/contacts/contactsOperations';
 import { StyledForm } from './UpdateContactForm.styled';
 import TextField from '@mui/material/TextField';
@@ -43,4 +44,12 @@ export const UpdateContactForm = ({ contact, closeForm }) => {
       </Button>
     </StyledForm>
   );
+};
+
+UpdateContactForm.propTypes = {
+  contact: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+  }).isRequired,
+  closeForm: PropTypes.func.isRequired,
 };

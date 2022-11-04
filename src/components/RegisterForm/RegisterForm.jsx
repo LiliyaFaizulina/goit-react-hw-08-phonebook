@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { registerUser } from 'redux/auth/authOperation';
-import { Form } from 'components/Common.styled';
+import { Form, Heading } from 'components/Common.styled';
 
 export const RegisterForm = () => {
   const [name, setName] = useState('');
@@ -36,35 +36,38 @@ export const RegisterForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <TextField
-        label="Name"
-        type="text"
-        name="name"
-        value={name}
-        onChange={handleInput}
-        placeholder="User name"
-        required
-      />
-      <TextField
-        label="Email"
-        type="email"
-        name="email"
-        value={email}
-        onChange={handleInput}
-        placeholder="email@example.com"
-        required
-      />
+    <>
+      <Heading>Create new account</Heading>
+      <Form onSubmit={handleSubmit}>
+        <TextField
+          label="Name"
+          type="text"
+          name="name"
+          value={name}
+          onChange={handleInput}
+          placeholder="User name"
+          required
+        />
+        <TextField
+          label="Email"
+          type="email"
+          name="email"
+          value={email}
+          onChange={handleInput}
+          placeholder="email@example.com"
+          required
+        />
 
-      <TextField
-        label="Password"
-        type="password"
-        name="password"
-        value={password}
-        onChange={handleInput}
-        required
-      />
-      <Button variant="contained">Submit</Button>
-    </Form>
+        <TextField
+          label="Password"
+          type="password"
+          name="password"
+          value={password}
+          onChange={handleInput}
+          required
+        />
+        <Button variant="contained">Submit</Button>
+      </Form>
+    </>
   );
 };
