@@ -28,7 +28,7 @@ export const Notification = () => {
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
     >
       <Alert severity="error" sx={{ width: '100%' }}>
-        {authError && 'Invalid password or email!'}
+        {authError}
         {error && 'Sorry, server connection error, try again later'}
       </Alert>
     </Snackbar>

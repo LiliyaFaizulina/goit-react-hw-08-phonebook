@@ -1,51 +1,45 @@
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 import { addContact } from 'redux/contacts/contactsOperations';
 import { selectContacts } from 'redux/contacts/contactsSelectors';
 import { Form } from 'components/Common.styled';
 import { Heading } from 'components/Common.styled';
 
-const nameCheckMessage =
-  "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan";
-const telCheckMessage =
-  'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +';
-
 export const AddContactForm = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
   const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
-  const handleInput = e => {
-    const { name, value } = e.target;
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'number':
-        setNumber(value);
-        break;
-      default:
-        return;
-    }
-  };
+  const validationSchema = yup.object({
+    name: yup
+      .string('Enter name')
+      .min(2, 'Name should be of minimum 2 characters length')
+      .required('Name is required'),
+    number: yup
+      .string('Enter number')
+      .min(5, 'Number should be of minimum 5 digits length')
+      .required('Number is required'),
+  });
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    const newName = name.toLowerCase();
-
-    if (contacts.some(contact => contact.name.toLowerCase() === newName)) {
-      alert(`${name} is already in contacts`);
-      return;
-    }
-
-    dispatch(addContact({ name, number }));
-
-    setName('');
-    setNumber('');
-  };
+  const { handleSubmit, values, handleChange, touched, errors, resetForm } =
+    useFormik({
+      initialValues: {
+        name: '',
+        number: '',
+      },
+      validationSchema: validationSchema,
+      onSubmit: values => {
+        const newName = values.name.toLowerCase();
+        if (contacts.some(contact => contact.name.toLowerCase() === newName)) {
+          alert(`${values.name} is already in contacts`);
+          return;
+        }
+        dispatch(addContact(values));
+        resetForm();
+      },
+    });
 
   return (
     <div>
@@ -53,25 +47,25 @@ export const AddContactForm = () => {
       <Form onSubmit={handleSubmit}>
         <TextField
           label="Name"
-          onChange={handleInput}
+          onChange={handleChange}
           size="small"
           type="text"
           name="name"
-          value={name}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title={nameCheckMessage}
+          value={values.name}
+          error={touched.name && Boolean(errors.name)}
+          helperText={touched.name && errors.name}
           required
         />
 
         <TextField
           label="Phone"
-          onChange={handleInput}
+          onChange={handleChange}
           size="small"
           type="tel"
           name="number"
-          value={number}
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title={telCheckMessage}
+          value={values.number}
+          error={touched.number && Boolean(errors.number)}
+          helperText={touched.number && errors.number}
           required
         />
 
