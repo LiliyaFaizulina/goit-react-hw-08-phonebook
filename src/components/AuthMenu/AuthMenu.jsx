@@ -9,6 +9,9 @@ export const AuthMenu = () => {
       <li>
         <StyledLink to="login">Login</StyledLink>
       </li>
+      <li>
+        <StyledLink to="verify">Verification</StyledLink>
+      </li>
     </Wrapper>
   );
 };

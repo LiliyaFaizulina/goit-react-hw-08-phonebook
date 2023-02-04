@@ -5,7 +5,7 @@ import { AddContactForm } from 'components/AddContactForm/AddContactForm';
 import { SearchFilter } from 'components/SearchFilter/SearchFilter';
 import { ContactList } from 'components/ContactList/ContactList';
 import { fetchContacts } from 'redux/contacts/contactsOperations';
-import { Wrapper } from 'components/Common.styled';
+import { Box, Wrapper } from 'components/Common.styled';
 
 const ContactsPage = () => {
   const dispatch = useDispatch();
@@ -19,10 +19,10 @@ const ContactsPage = () => {
       <Section>
         <Wrapper>
           <AddContactForm />
-          <div>
+          <Box>
             <SearchFilter />
             <ContactList />
-          </div>
+          </Box>
         </Wrapper>
       </Section>
     </>

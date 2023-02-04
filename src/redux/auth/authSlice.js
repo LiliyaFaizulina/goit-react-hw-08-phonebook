@@ -7,6 +7,7 @@ import {
   loginUser,
   logoutUser,
   fetchCurrentUser,
+  verifyUser,
 } from './authOperation';
 
 const persistConfig = {
@@ -18,7 +19,7 @@ const persistConfig = {
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: { name: '', email: '' },
+    user: { name: '', email: '', subscription: '', avatarUrl: '' },
     token: null,
     isLoading: false,
     isLoggedIn: false,
@@ -31,12 +32,21 @@ const authSlice = createSlice({
       state.error = false;
     },
     [registerUser.fulfilled]: (state, { payload }) => {
-      state.token = payload.token;
       state.user = payload.user;
-      state.isLoggedIn = true;
       state.isLoading = false;
     },
     [registerUser.rejected]: (state, { payload }) => {
+      state.error = payload;
+      state.isLoading = false;
+    },
+    [verifyUser.pending]: state => {
+      state.isLoading = true;
+      state.error = false;
+    },
+    [verifyUser.fulfilled]: state => {
+      state.isLoading = false;
+    },
+    [verifyUser.rejected]: (state, { payload }) => {
       state.error = payload;
       state.isLoading = false;
     },
@@ -60,7 +70,7 @@ const authSlice = createSlice({
     },
     [logoutUser.fulfilled]: (state, { payload }) => {
       state.token = null;
-      state.user = { name: '', email: '' };
+      state.user = { name: '', email: '', subscription: '', avatarUrl: '' };
       state.isLoggedIn = false;
       state.isLoading = false;
     },
@@ -74,7 +84,7 @@ const authSlice = createSlice({
       state.error = false;
     },
     [fetchCurrentUser.fulfilled]: (state, { payload }) => {
-      state.user = payload;
+      state.user = payload.user;
       state.isLoggedIn = true;
       state.isLoading = false;
       state.isFetching = false;

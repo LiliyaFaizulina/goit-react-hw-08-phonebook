@@ -7,3 +7,11 @@ export const Title = styled.h1`
   letter-spacing: 0.03em;
   line-height: 1.8;
 `;
+
+export const List = styled.ol`
+  color: ${p => p.theme.colors.light};
+  margin: 0;
+  padding-left: 20px;
+  letter-spacing: 0.03em;
+  line-height: 1.8;
+`;

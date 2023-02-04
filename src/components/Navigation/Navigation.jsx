@@ -8,14 +8,15 @@ export const Navigation = () => {
   return (
     <nav>
       <NavList>
-        <li>
-          <StyledNavLink to="/" end>
-            Home
-          </StyledNavLink>
-        </li>
-        {isLoggedIn && (
+        {isLoggedIn ? (
           <li>
             <StyledNavLink to="contacts">PhoneBook</StyledNavLink>
+          </li>
+        ) : (
+          <li>
+            <StyledNavLink to="/" end>
+              Home
+            </StyledNavLink>
           </li>
         )}
       </NavList>

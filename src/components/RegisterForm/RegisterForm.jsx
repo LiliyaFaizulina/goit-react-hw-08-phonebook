@@ -2,9 +2,9 @@ import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+
 import { registerUser } from 'redux/auth/authOperation';
-import { Form, Heading } from 'components/Common.styled';
+import { Form, Heading, StyledTextField } from 'components/Common.styled';
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -12,12 +12,13 @@ export const RegisterForm = () => {
   const validationSchema = yup.object({
     name: yup
       .string('Enter name')
-      .min(2, 'Name should be of minimum 2 characters length')
-      .required('Name is required'),
+      .required('Name is required')
+      .min(2, 'Minimum length is 2 characters')
+      .max(10, 'Maximum length is 10 characters'),
     email: yup
       .string('Enter your email')
-      .email('Enter a valid email')
-      .required('Email is required'),
+      .required('Email is required')
+      .email('Enter a valid email'),
     password: yup
       .string('Enter your password')
       .min(6, 'Password should be of minimum 6 characters length')
@@ -41,10 +42,11 @@ export const RegisterForm = () => {
     <>
       <Heading>Create new account</Heading>
       <Form onSubmit={handleSubmit}>
-        <TextField
+        <StyledTextField
           label="Name"
           type="text"
           name="name"
+          size="small"
           value={values.name}
           onChange={handleChange}
           placeholder="User name"
@@ -52,10 +54,11 @@ export const RegisterForm = () => {
           error={touched.name && Boolean(errors.name)}
           helperText={touched.name && errors.name}
         />
-        <TextField
+        <StyledTextField
           label="Email"
           type="email"
           name="email"
+          size="small"
           value={values.email}
           onChange={handleChange}
           placeholder="email@example.com"
@@ -64,17 +67,23 @@ export const RegisterForm = () => {
           helperText={touched.email && errors.email}
         />
 
-        <TextField
+        <StyledTextField
           label="Password"
           type="password"
           name="password"
+          size="small"
           value={values.password}
           onChange={handleChange}
           required
           error={touched.password && Boolean(errors.password)}
           helperText={touched.password && errors.password}
         />
-        <Button variant="contained" type="submit">
+        <Button
+          variant="contained"
+          type="submit"
+          fullWidth
+          style={{ marginTop: '16px' }}
+        >
           Submit
         </Button>
       </Form>

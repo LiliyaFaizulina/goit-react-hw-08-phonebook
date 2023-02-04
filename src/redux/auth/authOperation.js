@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
+axios.defaults.baseURL = 'https://contacts-app-lzd3.onrender.com/api';
 
 const token = {
   set(token) {
@@ -16,10 +17,13 @@ export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async (user, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post('/users/signup', user);
-      token.set(data.token);
+      const { data } = await axios.post('/users/register', user);
+      toast.success(
+        'Registration was successfully! Verification letter was sent on your email'
+      );
       return data;
     } catch (error) {
+      toast.error(error.response.data.message);
       return rejectWithValue('This user already exist');
     }
   }
@@ -33,6 +37,7 @@ export const loginUser = createAsyncThunk(
       token.set(data.token);
       return data;
     } catch (error) {
+      toast.error(error.response.data.message);
       return rejectWithValue('Invalid password or email!');
     }
   }
@@ -44,7 +49,9 @@ export const logoutUser = createAsyncThunk(
     try {
       await axios.post('/users/logout');
       token.unset();
+      toast.success('Logout successful');
     } catch (error) {
+      toast.error(error.response.data.message);
       return rejectWithValue(error.message);
     }
   }
@@ -63,6 +70,20 @@ export const fetchCurrentUser = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue('');
+    }
+  }
+);
+
+export const verifyUser = createAsyncThunk(
+  'auth/verifyUser',
+  async (email, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post('/users/verify', email);
+      toast.success(data.message);
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error.message);
     }
   }
 );

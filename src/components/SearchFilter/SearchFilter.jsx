@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { changeFilter } from 'redux/contacts/contactsSlice';
-import TextField from '@mui/material/TextField';
-import { Heading } from 'components/Common.styled';
+import { Heading, StyledTextField } from 'components/Common.styled';
 
 export const SearchFilter = () => {
   const dispatch = useDispatch();
@@ -12,9 +11,9 @@ export const SearchFilter = () => {
   return (
     <>
       <Heading>Contacts</Heading>
-      <TextField
+      <StyledTextField
         size="small"
-        sx={{ marginBottom: '10px' }}
+        sx={{ marginBottom: '10px', width: '100%' }}
         label="Find contacts by name"
         type="text"
         onChange={handleInput}

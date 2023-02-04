@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectEmail } from 'redux/auth/authSelectors';
+import { selectUser } from 'redux/auth/authSelectors';
 import { logoutUser } from 'redux/auth/authOperation';
 import { Button } from '@mui/material';
 import { Wrapper } from './UserMenu.styled';
 
 export const UserMenu = () => {
-  const email = useSelector(selectEmail);
+  const { name, avatarUrl } = useSelector(selectUser);
   const dispatch = useDispatch();
 
   const handleClick = () => {
@@ -13,8 +13,14 @@ export const UserMenu = () => {
   };
   return (
     <Wrapper>
-      <p>{email}</p>
-      <Button type="button" onClick={handleClick} variant="contained">
+      <img src={avatarUrl} alt="Avatar" height="30px" width="30px" />
+      <p>{name}</p>
+      <Button
+        type="button"
+        onClick={handleClick}
+        variant="contained"
+        size="small"
+      >
         Logout
       </Button>
     </Wrapper>

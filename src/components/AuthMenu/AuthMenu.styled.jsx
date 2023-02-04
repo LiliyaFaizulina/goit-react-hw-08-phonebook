@@ -12,6 +12,6 @@ export const StyledLink = styled(NavLink)`
   font-size: 18px;
   color: ${p => p.theme.colors.darkBlue};
   &.active {
-    color: ${p => p.theme.colors.blue};
+    color: ${p => p.theme.colors.white};
   }
 `;

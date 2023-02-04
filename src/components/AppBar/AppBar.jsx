@@ -4,12 +4,16 @@ import { AuthMenu } from 'components/AuthMenu/AuthMenu';
 import { UserMenu } from 'components/UserMenu/UserMenu';
 import { selectIsLoggedIn } from 'redux/auth/authSelectors';
 import Container from '@mui/material/Container';
-import { Notification } from 'components/Notification/Notification';
 
 export const AppBar = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   return (
-    <header>
+    <header
+      style={{
+        boxShadow: '0px 1px 1px 1px rgba(25, 118, 210, 0.5)',
+        backgroundColor: '#5893df',
+      }}
+    >
       <Container
         maxWidth="md"
         sx={{
@@ -17,7 +21,6 @@ export const AppBar = () => {
           flexWrap: 'wrap',
           alignItems: 'center',
           justifyContent: 'space-between',
-          borderBottom: '1px solid grey',
           paddingBottom: '10px',
           paddingTop: '10px',
         }}
@@ -25,7 +28,6 @@ export const AppBar = () => {
         <Navigation />
         {isLoggedIn ? <UserMenu /> : <AuthMenu />}
       </Container>
-      <Notification />
     </header>
   );
 };

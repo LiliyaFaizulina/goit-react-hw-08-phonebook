@@ -1,10 +1,9 @@
 import { useDispatch } from 'react-redux';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import Button from '@mui/material/Button';
 import { loginUser } from 'redux/auth/authOperation';
-import { Form, Heading } from 'components/Common.styled';
+import { Form, Heading, StyledTextField } from 'components/Common.styled';
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
@@ -37,11 +36,12 @@ export const LoginForm = () => {
     <>
       <Heading>Authorization</Heading>
       <Form onSubmit={handleSubmit}>
-        <TextField
+        <StyledTextField
           label="Email"
           type="email"
           name="email"
           value={values.email}
+          size="small"
           onChange={handleChange}
           placeholder="email@example.com"
           required
@@ -49,10 +49,11 @@ export const LoginForm = () => {
           helperText={touched.email && errors.email}
         />
 
-        <TextField
+        <StyledTextField
           label="Password"
           type="password"
           name="password"
+          size="small"
           value={values.password}
           onChange={handleChange}
           placeholder="password"
@@ -61,7 +62,12 @@ export const LoginForm = () => {
           helperText={touched.password && errors.password}
         />
 
-        <Button type="submit" variant="contained">
+        <Button
+          type="submit"
+          variant="contained"
+          fullWidth
+          style={{ marginTop: '16px' }}
+        >
           Login
         </Button>
       </Form>

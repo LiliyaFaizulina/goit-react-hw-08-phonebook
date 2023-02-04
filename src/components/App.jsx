@@ -11,6 +11,7 @@ import { fetchCurrentUser } from 'redux/auth/authOperation';
 const RegisterPage = lazy(() => import('../pages/RegisterPage/RegisterPage'));
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 const ContactsPage = lazy(() => import('../pages/ContactsPage/ContactsPage'));
+const VerifyPage = lazy(() => import('../pages/VerifyPage/VerifyPage'));
 
 export const App = () => {
   const isFetching = useSelector(selectIsFetching);
@@ -35,7 +36,7 @@ export const App = () => {
           <Route
             path="register"
             element={
-              <PublicRoute redirectTo="/" restricted>
+              <PublicRoute redirectTo="/contacts" restricted>
                 <RegisterPage />
               </PublicRoute>
             }
@@ -43,8 +44,16 @@ export const App = () => {
           <Route
             path="login"
             element={
-              <PublicRoute redirectTo="/" restricted>
+              <PublicRoute redirectTo="/contacts" restricted>
                 <LoginPage />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="verify"
+            element={
+              <PublicRoute redirectTo="/contacts" restricted>
+                <VerifyPage />
               </PublicRoute>
             }
           />

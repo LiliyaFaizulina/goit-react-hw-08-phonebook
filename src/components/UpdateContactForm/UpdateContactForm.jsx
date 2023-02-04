@@ -2,10 +2,11 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
+import { IconButton } from '@mui/material';
 import { updateContact } from 'redux/contacts/contactsOperations';
 import { StyledForm } from './UpdateContactForm.styled';
 import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
 
 export const UpdateContactForm = ({ contact, closeForm }) => {
   const dispatch = useDispatch();
@@ -13,18 +14,25 @@ export const UpdateContactForm = ({ contact, closeForm }) => {
   const validationSchema = yup.object({
     name: yup
       .string('Enter name')
-      .min(2, 'Name should be of minimum 2 characters length')
+      .min(2, 'Minimum length is 2 characters')
+      .max(20, 'Maximum length is 20 characters')
       .required('Name is required'),
-    number: yup
+    phone: yup
       .string('Enter number')
-      .min(5, 'Number should be of minimum 5 digits length')
+      .min(5, 'Minimum length is 5 digits')
+      .max(15, 'Maximum length is 15 digits')
       .required('Number is required'),
+    email: yup
+      .string('Enter email')
+      .email('Enter a valid email')
+      .required('Email is required'),
   });
 
   const { handleSubmit, values, handleChange, touched, errors } = useFormik({
     initialValues: {
       name: contact.name,
-      number: contact.number,
+      phone: contact.phone,
+      email: contact.email,
     },
     validationSchema: validationSchema,
     onSubmit: values => {
@@ -52,14 +60,32 @@ export const UpdateContactForm = ({ contact, closeForm }) => {
         onChange={handleChange}
         size="small"
         type="tel"
-        name="number"
-        value={values.number}
-        error={touched.number && Boolean(errors.number)}
-        helperText={touched.number && errors.number}
+        name="phone"
+        value={values.phone}
+        error={touched.phone && Boolean(errors.phone)}
+        helperText={touched.phone && errors.phone}
       />
-      <Button variant="outlined" size="small" type="submit">
-        Save
-      </Button>
+      <TextField
+        variant="standard"
+        aria-label="Email"
+        onChange={handleChange}
+        size="small"
+        type="email"
+        name="email"
+        value={values.email}
+        error={touched.email && Boolean(errors.email)}
+        helperText={touched.email && errors.email}
+      />
+      <IconButton
+        aria-label="save"
+        color="primary"
+        style={{ position: 'absolute', right: '0', bottom: '0' }}
+        variant="outlined"
+        size="small"
+        type="submit"
+      >
+        <SaveAltOutlinedIcon />
+      </IconButton>
     </StyledForm>
   );
 };
@@ -67,7 +93,8 @@ export const UpdateContactForm = ({ contact, closeForm }) => {
 UpdateContactForm.propTypes = {
   contact: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
   }).isRequired,
   closeForm: PropTypes.func.isRequired,
 };
